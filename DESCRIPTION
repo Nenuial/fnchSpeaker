@@ -9,6 +9,7 @@ Imports:
     config (>= 0.3.1),
     fresh,
     golem (>= 0.3.3),
+    reactable,
     shiny (>= 1.7.2)
 Encoding: UTF-8
 LazyData: true
