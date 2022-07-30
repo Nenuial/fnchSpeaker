@@ -14,8 +14,6 @@ run_app <- function(
   uiPattern = "/",
   ...
 ) {
-  options(RCurlOptions = list(ssl.verifypeer = FALSE))
-
   with_golem_options(
     app = shinyApp(
       ui = app_ui,
