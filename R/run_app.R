@@ -14,6 +14,8 @@ run_app <- function(
   uiPattern = "/",
   ...
 ) {
+  httr::set_config(httr::config(ssl_verifypeer = FALSE))
+
   with_golem_options(
     app = shinyApp(
       ui = app_ui,
