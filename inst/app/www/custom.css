@@ -35,6 +35,16 @@
   background: hsl(213, 20%, 99%);
 }
 
+.result-detail h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.result-detail h3:first-child {
+  margin-top: 0px;
+}
+
 .result-table {
   border: 1px solid hsl(213, 33%, 93%);
   border-radius: 2px;
