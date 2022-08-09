@@ -12,7 +12,7 @@ mod_results_ui <- function(id){
   tagList(
     bs4Card(
       title = "Paramètres",
-      collapsible = FALSE,
+      collapsible = TRUE,
       collapsed = FALSE,
       closable = FALSE,
       headerBorder = TRUE,
@@ -79,6 +79,7 @@ mod_results_ui <- function(id){
     ),
 
     bs4Card(
+      id = ns("startlist-box"),
       title = "Liste",
       collapsed = FALSE,
       closable = FALSE,
@@ -88,9 +89,7 @@ mod_results_ui <- function(id){
 
       fluidRow(
         col_12(
-          reactable::reactableOutput(
-            outputId = ns("startlist_table")
-          ) |> shinycssloaders::withSpinner()
+          uiOutput(ns("startlist_placeholder"))
         )
       )
     )
@@ -120,6 +119,12 @@ mod_results_server <- function(id){
     })
 
     observeEvent(input$load,{
+      output$startlist_placeholder <- renderUI({
+        reactable::reactableOutput(
+          outputId = ns("startlist_table")
+        ) |> shinycssloaders::withSpinner()
+      })
+
       output$startlist_table <- reactable::renderReactable({
         rsvps::get_fnch_sp_startlist(
           eventid = isolate(input$event_id),
