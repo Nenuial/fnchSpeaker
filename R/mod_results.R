@@ -10,6 +10,25 @@
 mod_results_ui <- function(id){
   ns <- NS(id)
   tagList(
+    tags$head(
+      HTML(
+        "
+          <script>
+          var socket_timeout_interval
+          var n = 0
+          $(document).on('shiny:connected', function(event) {
+          socket_timeout_interval = setInterval(function(){
+          Shiny.onInputChange('count', n++)
+          }, 15000)
+          });
+          $(document).on('shiny:disconnected', function(event) {
+          clearInterval(socket_timeout_interval)
+          });
+          </script>
+          "
+      )
+    ),
+
     bs4Card(
       title = "Paramètres",
       collapsible = TRUE,
@@ -91,7 +110,9 @@ mod_results_ui <- function(id){
         col_12(
           uiOutput(ns("startlist_placeholder"))
         )
-      )
+      ),
+
+      textOutput("keepAlive")
     )
   )
 }
@@ -102,6 +123,11 @@ mod_results_ui <- function(id){
 mod_results_server <- function(id){
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
+
+    output$keepAlive <- renderText({
+      req(input$count)
+      paste("keep alive ", input$count)
+    })
 
     observe({
       req(input$event_id)
