@@ -67,7 +67,7 @@ mod_results_ui <- function(id){
           shiny::numericInput(
             inputId = ns("nb_years"),
             label = "Nombre d'années",
-            value = 1, min = 1, max = 5, step = 1
+            value = 2, min = 1, max = 5, step = 1
           )
         )
       ),
@@ -108,6 +108,9 @@ mod_results_ui <- function(id){
 
       fluidRow(
         col_12(
+          # reactable::reactableOutput(
+          #   outputId = ns("startlist_table")
+          # ) |> shinycssloaders::withSpinner()
           uiOutput(ns("startlist_placeholder"))
         )
       ),
@@ -123,6 +126,8 @@ mod_results_ui <- function(id){
 mod_results_server <- function(id){
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
+    titles_data <- NULL
+    startlist_data <- list()
 
     output$keepAlive <- renderText({
       req(input$count)
@@ -144,7 +149,7 @@ mod_results_server <- function(id){
       })
     })
 
-    observeEvent(input$load,{
+    observe({
       output$startlist_placeholder <- renderUI({
         reactable::reactableOutput(
           outputId = ns("startlist_table")
@@ -152,16 +157,22 @@ mod_results_server <- function(id){
       })
 
       output$startlist_table <- reactable::renderReactable({
-        rsvps::get_fnch_sp_startlist(
+        titles_data <<- rsvps::get_fnch_sp_titles(titles_min = isolate(input$titles_min))
+        startlist_data <<- rsvps::get_fnch_sp_startlist_data(
           eventid = isolate(input$event_id),
           classid = isolate(input$class_id),
           nb_years = isolate(input$nb_years),
           nb_ranks = isolate(input$nb_ranks),
-          class_min = isolate(input$class_min),
-          titles_min = isolate(input$titles_min)
+          class_min = isolate(input$class_min)
+        )
+
+        rsvps::get_fnch_sp_startlist(
+          startlist_data = startlist_data,
+          titles = titles_data
         )
       })
-    })
+    }) |> bindEvent(input$load)
+
   })
 }
 

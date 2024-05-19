@@ -6,11 +6,11 @@
 #' @import bs4Dash
 #' @noRd
 app_server <- function(input, output, session) {
-  # # Setup for SQLite DB
+  # Setup for SQLite DB
   # credentials <- data.frame(
   #   user = c("burkhardp"), # mandatory
   #   password = c("planeyse"), # secret initial password
-  #   start = c("2022-01-01"), # optinal (all others)
+  #   start = c("2022-01-01"), # optional (all others)
   #   expire = c(NA),
   #   admin = c(TRUE),
   #   stringsAsFactors = FALSE
