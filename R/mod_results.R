@@ -92,7 +92,8 @@ mod_results_ui <- function(id){
           shiny::actionButton(
             inputId = ns("load"),
             label = "Charger"
-          )
+          ),
+          uiOutput(ns("pdf_button_placeholder"), inline = TRUE)
         )
       )
     ),
@@ -171,8 +172,20 @@ mod_results_server <- function(id){
           titles = titles_data
         )
       })
+
+      output$pdf_button_placeholder <- renderUI({
+        downloadButton(ns("dwnlpdf"), label = "PDF")
+      })
     }) |> bindEvent(input$load)
 
+    output$dwnlpdf <- downloadHandler(
+      filename = "startlist.pdf",
+      content = function(file) {
+        out <- rsvps::render_fnch_sp_startlist_pdf(startlist_data, titles_data)
+
+        file.rename(out, file)
+      }
+    )
   })
 }
 
