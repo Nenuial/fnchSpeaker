@@ -1,6 +1,6 @@
 Package: fnchSpeaker
 Title: Speaker Results
-Version: 0.1.0.9000
+Version: 1.0.0
 Authors@R: 
     person("Pascal", "Burkhard", , "pascal.burkhard@gmail.com", role = c("cre", "aut"))
 Description: Find results for a given startlist.
@@ -27,4 +27,4 @@ Remotes:
     Nenuial/rsvps
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.0
+RoxygenNote: 7.3.1

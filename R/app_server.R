@@ -3,7 +3,6 @@
 #' @param input,output,session Internal parameters for {shiny}.
 #'     DO NOT REMOVE.
 #' @import shiny
-#' @import bs4Dash
 #' @noRd
 app_server <- function(input, output, session) {
   # Setup for SQLite DB
@@ -31,5 +30,6 @@ app_server <- function(input, output, session) {
   )
 
   # Your application server logic
-  mod_results_server("results")
+  mod_results_jumping_server("jumping")
+  mod_results_dressage_server("dressage")
 }

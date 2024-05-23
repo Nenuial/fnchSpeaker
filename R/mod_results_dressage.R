@@ -1,4 +1,4 @@
-#' results UI Function
+#' Dressage results UI Function
 #'
 #' @description A shiny Module.
 #'
@@ -7,7 +7,8 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
-mod_results_ui <- function(id){
+#' @import bslib
+mod_results_dressage_ui <- function(id){
   ns <- NS(id)
   tagList(
     tags$head(
@@ -29,102 +30,79 @@ mod_results_ui <- function(id){
       )
     ),
 
-    bs4Card(
-      title = "Paramètres",
-      collapsible = TRUE,
-      collapsed = FALSE,
-      closable = FALSE,
-      headerBorder = TRUE,
-      status = "primary",
-      width = 12,
-
-      fluidRow(
-        col_6(
+    bslib::card(
+      bslib::card_header("Paramètres"),
+      bslib::card_body(
+        layout_columns(
           shiny::selectInput(
             inputId = ns("event_id"),
             label = "Concours",
-            choices = rsvps::get_fnch_sp_events() |>
+            choices = rsvps::get_fnch_sp_events_dr() |>
               dplyr::select(titre, id) |>
               tibble::deframe()
-          )
-        ),
-        col_6(
+          ),
           shiny::uiOutput(
+            fill = "container",
+            inline= TRUE,
             outputId = ns("startlist_ui")
           )
-        )
-      ),
+        ),
 
-      fluidRow(
-        col_6(
+        layout_columns(
           shiny::numericInput(
             inputId = ns("nb_ranks"),
             label = "Rang max.",
             value = 5, min = 5, max = 10, step = 1
-          )
-        ),
-        col_6(
+          ),
           shiny::numericInput(
             inputId = ns("nb_years"),
             label = "Nombre d'années",
             value = 2, min = 1, max = 5, step = 1
           )
-        )
-      ),
-      fluidRow(
-        col_6(
+        ),
+        layout_columns(
           shiny::selectInput(
             inputId = ns("class_min"),
             label = "Catégorie min.",
-            choices = rsvps::get_fnch_sp_class_cat()
-          )
-        ),
-        col_6(
+            choices = rsvps::get_fnch_sp_class_cat_dr()
+          ),
           shiny::numericInput(
             inputId = ns("titles_min"),
             label = "Titres depuis",
             value = 2015, min = 2015, max = format(Sys.Date(), "%Y") |> as.numeric() - 1, step = 1
           )
-        )
-      ),
-      fluidRow(
-        col_12(
-          shiny::actionButton(
-            inputId = ns("load"),
-            label = "Charger"
-          ),
-          uiOutput(ns("pdf_button_placeholder"), inline = TRUE)
+        ),
+        fluidRow(
+          col_12(
+            shiny::actionButton(
+              inputId = ns("load"),
+              label = "Charger"
+            ),
+            uiOutput(ns("pdf_button_placeholder"), inline = TRUE)
+          )
         )
       )
     ),
 
-    bs4Card(
-      id = ns("startlist-box"),
-      title = "Liste",
-      collapsed = FALSE,
-      closable = FALSE,
-      headerBorder = TRUE,
-      status = "primary",
-      width = 12,
+    bslib::card(
+      bslib::card_header("Liste"),
+      bslib::card_body(
+        fluidRow(
+          col_12(
+            uiOutput(ns("startlist_placeholder"))
+          )
+        ),
 
-      fluidRow(
-        col_12(
-          # reactable::reactableOutput(
-          #   outputId = ns("startlist_table")
-          # ) |> shinycssloaders::withSpinner()
-          uiOutput(ns("startlist_placeholder"))
-        )
-      ),
-
-      textOutput("keepAlive")
+        textOutput("keepAlive")
+      )
     )
   )
 }
 
-#' results Server Functions
+#' Dressage results Server Functions
 #'
 #' @noRd
-mod_results_server <- function(id){
+mod_results_dressage_server <- function(id){
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     titles_data <- NULL
@@ -164,7 +142,8 @@ mod_results_server <- function(id){
           classid = isolate(input$class_id),
           nb_years = isolate(input$nb_years),
           nb_ranks = isolate(input$nb_ranks),
-          class_min = isolate(input$class_min)
+          class_min = isolate(input$class_min),
+          "dressage"
         )
 
         rsvps::get_fnch_sp_startlist(
@@ -188,9 +167,3 @@ mod_results_server <- function(id){
     )
   })
 }
-
-## To be copied in the UI
-# mod_results_ui("results_1")
-
-## To be copied in the server
-# mod_results_server("results_1")

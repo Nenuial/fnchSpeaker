@@ -1,33 +1,50 @@
+#' The application theme
+#'
+#' @export
+app_theme <- function() {
+  bslib::bs_theme(
+    bg = "#2e3440",
+    fg = "#eceff4",
+    primary = "#306489",
+    secondary = "#ad8cae",
+    success = "#a3be8c",
+    info = "#4f93b8",
+    warning = "#d08770",
+    danger = "#bf616a",
+    base_font = "Fira Sans",
+    code_font = "Fira Code",
+    heading_font = "Fira Sans",
+    bootswatch = "darkly"
+  )
+}
+
 #' The application User-Interface
 #'
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
 #' @import shiny
-#' @import bs4Dash
+#' @import bslib
 #' @noRd
 app_ui <- function(request) {
-  theme <- fresh::create_theme(
-    fresh::bs4dash_status(primary = "#5E81AC", danger = "#BF616A")
-  )
-
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    bs4DashPage(
-      header = bs4DashNavbar(
-        status = "white",
-        border = TRUE,
-        skin = "light",
-        "SpeakerApp"
-      ),
-
+    fluidPage(
       title = "SpeakerApp",
-
-      sidebar = bs4DashSidebar(disable = TRUE),
-
-      body = bs4DashBody(
-        mod_results_ui("results")
+      navbarPage(
+        title = tags$img(src = "www/favicon.png", width = "50"),
+        theme = app_theme(),
+        tabPanel(
+          "Saut",
+          fluid = TRUE,
+          mod_results_jumping_ui("jumping")
+        ),
+        tabPanel(
+          "Dressage",
+          fluid = TRUE,
+          mod_results_dressage_ui("dressage")
+        ),
       )
     )
   )
@@ -48,7 +65,7 @@ golem_add_external_resources <- function() {
   )
 
   tags$head(
-    favicon(),
+    favicon(ext = "png"),
     bundle_resources(
       path = app_sys("app/www"),
       app_title = "fnchSpeaker"

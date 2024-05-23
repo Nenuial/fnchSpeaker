@@ -1,10 +1,27 @@
 /* css styles */
 
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400&display=swap');
 
 * {
   font-family: "Fira Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 15px;
+}
+
+.nav-link {
+  color: #eceff4;
+}
+
+.nav-link.active {
+  color: #D8DEE9 !important;
+}
+
+.bslib-card .card-body {
+  overflow: hidden;
+}
+
+.shiny-input-container {
+  width: auto !important;
 }
 
 .rt-text-content {
@@ -14,13 +31,14 @@
 .start-table {
   margin-top: 16px;
   border: 1px solid hsl(213, 33%, 93%);
-  border-radius: 4px;
+  border-radius: 4pt;
+  background-color: transparent !important;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 }
 
 .header {
-  background-color: hsl(213, 45%, 97%);
-  border-bottom-color: hsl(213, 33%, 93%);
+  background-color: #2e3440;
+  border-bottom-color: #3b4252;
   border-bottom-width: 1px;
   color: hsl(213, 13%, 33%);
 }
@@ -31,8 +49,8 @@
 
 .result-detail {
   padding: 5px;
-  box-shadow: inset 0 1px 3px #dbdbdb;
-  background: hsl(213, 20%, 99%);
+  box-shadow: inset 0 1px 3px #4c566a;
+  background: #2e3440;
 }
 
 .result-detail h3 {
@@ -46,8 +64,8 @@
 }
 
 .result-table {
-  border: 1px solid hsl(213, 33%, 93%);
-  border-radius: 2px;
+  border: 1px solid #3b4252;
+  background-color: #4c566a !important;
   box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.05);
   font-size: 14px;
 }
