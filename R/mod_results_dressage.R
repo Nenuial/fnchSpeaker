@@ -18,7 +18,7 @@ mod_results_dressage_ui <- function(id){
           shiny::selectInput(
             inputId = ns("event_id"),
             label = "Concours",
-            choices = rsvps::get_fnch_sp_events_dr() |>
+            choices = rsvps::get_fnch_sp_events("DR") |>
               dplyr::select(titre, id) |>
               tibble::deframe()
           ),

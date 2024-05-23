@@ -44,6 +44,10 @@ app_ui <- function(request) {
       nav_panel(
         title = "Dressage",
         mod_results_dressage_ui("dressage")
+      ),
+      nav_panel(
+        title = "Concours Complet",
+        mod_results_eventing_ui("eventing")
       )
     )
   )

@@ -1,4 +1,4 @@
-#' Jumping results UI Function
+#' Eventing results UI Function
 #'
 #' @description A shiny Module.
 #'
@@ -8,7 +8,7 @@
 #'
 #' @importFrom shiny NS
 #' @import bslib
-mod_results_jumping_ui <- function(id){
+mod_results_eventing_ui <- function(id){
   ns <- NS(id)
   p(
     bslib::card(
@@ -18,7 +18,7 @@ mod_results_jumping_ui <- function(id){
           shiny::selectInput(
             inputId = ns("event_id"),
             label = "Concours",
-            choices = rsvps::get_fnch_sp_events("SP") |>
+            choices = rsvps::get_fnch_sp_events("CC") |>
               dplyr::select(titre, id) |>
               tibble::deframe()
           ),
@@ -33,7 +33,7 @@ mod_results_jumping_ui <- function(id){
           shiny::selectInput(
             inputId = ns("class_min"),
             label = "Catégorie min.",
-            choices = rsvps::get_fnch_sp_class_cat()
+            choices = c()
           ),
           shiny::numericInput(
             inputId = ns("titles_min"),
@@ -82,10 +82,10 @@ mod_results_jumping_ui <- function(id){
   )
 }
 
-#' Jumping results Server Functions
+#' Eventing results Server Functions
 #'
 #' @noRd
-mod_results_jumping_server <- function(id){
+mod_results_eventing_server <- function(id){
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     titles_data <- NULL
@@ -125,7 +125,8 @@ mod_results_jumping_server <- function(id){
           classid = isolate(input$class_id),
           nb_years = isolate(input$nb_years),
           nb_ranks = isolate(input$nb_ranks),
-          class_min = isolate(input$class_min)
+          class_min = isolate(input$class_min),
+          "eventing"
         )
 
         rsvps::get_fnch_sp_startlist(
