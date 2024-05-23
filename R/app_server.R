@@ -30,7 +30,8 @@ app_server <- function(input, output, session) {
   )
 
   # Your application server logic
-  mod_results_jumping_server("jumping")
-  mod_results_dressage_server("dressage")
-  mod_results_eventing_server("eventing")
+  mod_results_server("jumping")
+  mod_results_server("dressage")
+  mod_results_server("eventing")
+  mod_results_server("driving")
 }

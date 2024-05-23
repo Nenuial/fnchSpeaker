@@ -39,15 +39,15 @@ app_ui <- function(request) {
       theme = app_theme(),
       nav_panel(
         title = "Saut",
-        mod_results_jumping_ui("jumping")
+        mod_results_ui("jumping", "SP")
       ),
       nav_panel(
         title = "Dressage",
-        mod_results_dressage_ui("dressage")
+        mod_results_ui("dressage", "DR")
       ),
       nav_panel(
         title = "Concours Complet",
-        mod_results_eventing_ui("eventing")
+        mod_results_ui("eventing", "CC")
       )
     )
   )
