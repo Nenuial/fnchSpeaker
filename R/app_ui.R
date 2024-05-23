@@ -30,22 +30,19 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    fluidPage(
-      title = "SpeakerApp",
-      navbarPage(
-        title = tags$img(src = "www/favicon.png", width = "50"),
-        theme = app_theme(),
-        tabPanel(
-          "Saut",
-          fluid = TRUE,
-          mod_results_jumping_ui("jumping")
-        ),
-        tabPanel(
-          "Dressage",
-          fluid = TRUE,
-          mod_results_dressage_ui("dressage")
-        ),
-      )
+    navbarPage(
+      title = tags$img(src = "www/favicon.png", width = "50"),
+      theme = app_theme(),
+      tabPanel(
+        "Saut",
+        fluid = TRUE,
+        mod_results_jumping_ui("jumping")
+      ),
+      tabPanel(
+        "Dressage",
+        fluid = TRUE,
+        mod_results_dressage_ui("dressage")
+      ),
     )
   )
 }
@@ -69,8 +66,24 @@ golem_add_external_resources <- function() {
     bundle_resources(
       path = app_sys("app/www"),
       app_title = "fnchSpeaker"
-    )
+    ),
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert()
+    HTML(
+      "
+        <script>
+        var socket_timeout_interval
+        var n = 0
+        $(document).on('shiny:connected', function(event) {
+        socket_timeout_interval = setInterval(function(){
+        Shiny.onInputChange('count', n++)
+        }, 15000)
+        });
+        $(document).on('shiny:disconnected', function(event) {
+        clearInterval(socket_timeout_interval)
+        });
+        </script>
+      "
+    )
   )
 }

@@ -10,26 +10,7 @@
 #' @import bslib
 mod_results_dressage_ui <- function(id){
   ns <- NS(id)
-  tagList(
-    tags$head(
-      HTML(
-        "
-          <script>
-          var socket_timeout_interval
-          var n = 0
-          $(document).on('shiny:connected', function(event) {
-          socket_timeout_interval = setInterval(function(){
-          Shiny.onInputChange('count', n++)
-          }, 15000)
-          });
-          $(document).on('shiny:disconnected', function(event) {
-          clearInterval(socket_timeout_interval)
-          });
-          </script>
-          "
-      )
-    ),
-
+  p(
     bslib::card(
       bslib::card_header("Paramètres"),
       bslib::card_body(
@@ -49,18 +30,6 @@ mod_results_dressage_ui <- function(id){
         ),
 
         layout_columns(
-          shiny::numericInput(
-            inputId = ns("nb_ranks"),
-            label = "Rang max.",
-            value = 5, min = 5, max = 10, step = 1
-          ),
-          shiny::numericInput(
-            inputId = ns("nb_years"),
-            label = "Nombre d'années",
-            value = 2, min = 1, max = 5, step = 1
-          )
-        ),
-        layout_columns(
           shiny::selectInput(
             inputId = ns("class_min"),
             label = "Catégorie min.",
@@ -72,6 +41,20 @@ mod_results_dressage_ui <- function(id){
             value = 2015, min = 2015, max = format(Sys.Date(), "%Y") |> as.numeric() - 1, step = 1
           )
         ),
+
+        layout_columns(
+          shiny::numericInput(
+            inputId = ns("nb_ranks"),
+            label = "Rang max.",
+            value = 5, min = 5, max = 10, step = 1
+          ),
+          shiny::numericInput(
+            inputId = ns("nb_years"),
+            label = "Nombre d'années",
+            value = 2, min = 1, max = 5, step = 1
+          )
+        ),
+
         fluidRow(
           col_12(
             shiny::actionButton(
