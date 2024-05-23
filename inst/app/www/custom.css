@@ -8,14 +8,6 @@
   font-size: 15px;
 }
 
-.nav-link {
-  color: #eceff4;
-}
-
-.nav-link.active {
-  color: #D8DEE9 !important;
-}
-
 .bslib-card .card-body {
   overflow: hidden;
 }

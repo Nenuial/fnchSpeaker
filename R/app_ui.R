@@ -30,19 +30,21 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    navbarPage(
-      title = tags$img(src = "www/favicon.png", width = "50"),
+    page_navbar(
+      window_title = "SpeakerApp",
+      bg = "#306489",
+      fluid = TRUE,
+      fillable = FALSE,
+      title = img(src = "www/favicon.png", width = "50"),
       theme = app_theme(),
-      tabPanel(
-        "Saut",
-        fluid = TRUE,
+      nav_panel(
+        title = "Saut",
         mod_results_jumping_ui("jumping")
       ),
-      tabPanel(
-        "Dressage",
-        fluid = TRUE,
+      nav_panel(
+        title = "Dressage",
         mod_results_dressage_ui("dressage")
-      ),
+      )
     )
   )
 }
