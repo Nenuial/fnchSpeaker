@@ -122,7 +122,10 @@ mod_results_server <- function(id){
       })
 
       output$startlist_table <- reactable::renderReactable({
-        titles_data <<- rsvps::get_fnch_sp_titles(titles_min = isolate(input$titles_min))
+        titles_data <<- rsvps::get_fnch_sp_titles(
+          titles_min = isolate(input$titles_min),
+          discipline = id
+        )
         startlist_data <<- rsvps::get_fnch_sp_startlist_data(
           eventid = isolate(input$event_id),
           classid = isolate(input$class_id),
