@@ -38,7 +38,10 @@ mod_results_ui <- function(id, event_code){
           shiny::numericInput(
             inputId = ns("titles_min"),
             label = "Titres depuis",
-            value = 2015, min = 2015, max = format(Sys.Date(), "%Y") |> as.numeric() - 1, step = 1
+            step = 1,
+            min = 2015,
+            max = format(Sys.Date(), "%Y") |> as.numeric(),
+            value = format(Sys.Date(), "%Y") |> as.numeric() - 1
           )
         ),
 
