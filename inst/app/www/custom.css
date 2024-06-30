@@ -62,6 +62,10 @@
   font-size: 14px;
 }
 
+.rt-expander:after {
+  border-top: 7px solid white !important;
+}
+
 .navbar-brand {
   padding-top: 0px !important;
 }
